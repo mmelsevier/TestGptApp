@@ -4,12 +4,11 @@ import {
   QueryClient,
   QueryClientProvider,
 } from "@tanstack/react-query";
-import type { CompletionRequestResponse } from "../lib/types";
-
-type Message = {
-  role: "user" | "assistant";
-  content: string;
-};
+import type {
+  CompletionRequest,
+  CompletionRequestResponse,
+  Message,
+} from "../lib/types";
 
 export default function MessagesContainer() {
   const queryClient = new QueryClient();
@@ -76,12 +75,14 @@ const useSendMessages = () => {
 };
 
 const sendMessage = async (messages: Message[]) => {
+  const body: CompletionRequest = { messages };
+
   const response = await fetch("/api/chat", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(messages),
+    body: JSON.stringify(body),
   });
 
   if (!response.ok) {
