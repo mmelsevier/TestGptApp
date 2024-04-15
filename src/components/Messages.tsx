@@ -22,7 +22,7 @@ export default function MessagesContainer() {
 function Messages() {
   const [previousMessages, setPreviousMessages] = useState<Message[]>([]);
   const [messageInput, setMessageInput] = useState("");
-  const { mutateAsync: sendMessages } = useSendMessages();
+  const { isPending, mutateAsync: sendMessages } = useSendMessages();
 
   const handleSendMessage = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -50,6 +50,7 @@ function Messages() {
           <Message message={message} />
         ))}
       </div>
+      {isPending && <div>...</div>}
       <form onSubmit={handleSendMessage}>
         <input
           type="text"
