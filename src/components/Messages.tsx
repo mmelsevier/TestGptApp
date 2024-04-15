@@ -58,6 +58,7 @@ function Messages() {
           onChange={(event) => {
             setMessageInput(event.target.value);
           }}
+          required
         />
         <button type="submit">Send</button>
       </form>
