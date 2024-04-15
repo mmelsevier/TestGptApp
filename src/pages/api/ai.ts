@@ -9,8 +9,16 @@ export const POST: APIRoute = async ({ request }) => {
   const body = (await request.json()) as CompletionRequest;
 
   const completion = await openai.chat.completions.create({
-    messages: [{ role: "system", content: body.message }],
-    model: "gpt-3.5-turbo",
+    // Model options: https://platform.openai.com/docs/models/continuous-model-upgrades
+    model: "gpt-4-turbo-preview",
+    // messages sent
+    messages: [
+      {
+        // "user" - user, "system" - context, "tool" - function
+        role: "user",
+        content: body.message,
+      },
+    ],
   });
 
   return new Response(
