@@ -1,5 +1,5 @@
 ---
-import Messages from "../components/Messages";
+import Chat from "../components/Chat";
 ---
 
 <html lang="en">
@@ -11,7 +11,10 @@ import Messages from "../components/Messages";
     <title>Astro</title>
   </head>
   <body>
-    <h1>Astro</h1>
-    <Messages client:load />
+    <main class="overflow-hidden w-full h-screen relative flex">
+      <h1>Astro</h1>
+      <Chat client:load />
+    </main>
   </body>
 </html>
+../components/Chat
