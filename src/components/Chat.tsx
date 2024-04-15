@@ -27,10 +27,13 @@ function Messages() {
   const handleSendMessage = async (event: React.FormEvent) => {
     event.preventDefault();
 
+    setMessageInput("");
+
     const messagesToSend = previousMessages.concat({
       role: "user",
       content: messageInput,
     });
+    setPreviousMessages(messagesToSend);
 
     const response = await sendMessages(messagesToSend);
 
@@ -40,7 +43,6 @@ function Messages() {
     });
 
     setPreviousMessages(messagesToDisplay);
-    setMessageInput("");
   };
 
   return (
