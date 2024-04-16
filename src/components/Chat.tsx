@@ -65,7 +65,7 @@ function Messages() {
           ))}
         </div>
         {isPending && <div>...</div>}
-        <form onSubmit={handleSendMessage} className="w-full flex items-start">
+        <form onSubmit={handleSendMessage} className="w-full flex items-end">
           <textarea
             value={messageInput}
             onChange={(event) => {
@@ -78,10 +78,23 @@ function Messages() {
           />
           <button
             type="submit"
-            className="px-4 py-2 rounded-lg bg-[#1E282A] border border-[#3B4B4F] text-white hover:bg-[#3B4B4F] transition-colors duration-200"
-            disabled={isPending}
+            className="px-4 py-2 rounded-lg bg-[#1E282A] border border-[#3B4B4F] text-white hover:bg-[#3B4B4F] transition-colors duration-200 flex items-center justify-center disabled:opacity-50"
+            disabled={isPending || messageInput.length == 0}
           >
-            Send
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M14.752 11.168L3.6 2.4A1 1 0 002 3.227v17.546a1 1 0 001.6.827l11.152-8.768a1 1 0 000-1.664zM21 12a1 1 0 100-2 1 1 0 000 2z"
+              />
+            </svg>
           </button>
         </form>
       </div>
