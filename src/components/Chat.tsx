@@ -57,7 +57,7 @@ function Messages() {
   useEffect(resizeTextArea, [messageInput]);
 
   return (
-    <section className="flex justify-center">
+    <section className="flex justify-center py-10">
       <div className="max-w-screen-md w-full">
         <div>
           {previousMessages.map((message) => (
@@ -65,7 +65,10 @@ function Messages() {
           ))}
         </div>
         {isPending && <div>...</div>}
-        <form onSubmit={handleSendMessage} className="w-full flex items-end">
+        <form
+          onSubmit={handleSendMessage}
+          className="w-full flex items-end mt-4"
+        >
           <textarea
             value={messageInput}
             onChange={(event) => {
@@ -78,7 +81,7 @@ function Messages() {
           />
           <button
             type="submit"
-            className="px-4 py-2 rounded-lg bg-[#1E282A] border border-[#3B4B4F] text-white hover:bg-[#3B4B4F] transition-colors duration-200 flex items-center justify-center disabled:opacity-50"
+            className="px-4 py-2 rounded-lg bg-[#1E282A] border border-[#3B4B4F] text-white enabled:hover:bg-[#3B4B4F] transition-colors duration-200 flex items-center justify-center disabled:opacity-50"
             disabled={isPending || messageInput.length == 0}
           >
             <svg
@@ -103,7 +106,17 @@ function Messages() {
 }
 
 function Message({ message }: { message: Message }) {
-  return <div>{message.content}</div>;
+  return (
+    <div
+      className={`${
+        message.role === "user"
+          ? "bg-green-950 text-white-100"
+          : "bg-purple-950 text-gray-100"
+      } p-3 my-2 rounded-md`}
+    >
+      {message.content}
+    </div>
+  );
 }
 
 const useSendMessages = () => {
