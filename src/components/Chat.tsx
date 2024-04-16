@@ -46,30 +46,32 @@ function Messages() {
   };
 
   return (
-    <section className="p-10">
-      <div>
-        {previousMessages.map((message) => (
-          <Message message={message} />
-        ))}
+    <section className="flex justify-center">
+      <div className="max-w-screen-md">
+        <div>
+          {previousMessages.map((message) => (
+            <Message message={message} />
+          ))}
+        </div>
+        {isPending && <div>...</div>}
+        <form onSubmit={handleSendMessage}>
+          <input
+            type="text"
+            value={messageInput}
+            onChange={(event) => {
+              setMessageInput(event.target.value);
+            }}
+            required
+            className="mr-4 p-2 rounded-lg bg-[#1E282A] border border-gray-600 text-white"
+          />
+          <button
+            type="submit"
+            className="px-4 py-2 rounded-lg bg-[#1E282A] border border-[#3B4B4F] text-white hover:bg-[#3B4B4F] transition-colors duration-200"
+          >
+            Send
+          </button>
+        </form>
       </div>
-      {isPending && <div>...</div>}
-      <form onSubmit={handleSendMessage}>
-        <input
-          type="text"
-          value={messageInput}
-          onChange={(event) => {
-            setMessageInput(event.target.value);
-          }}
-          required
-          className="mr-4 p-2 rounded-lg bg-[#1E282A] border border-gray-600 text-white"
-        />
-        <button
-          type="submit"
-          className="px-4 py-2 rounded-lg bg-[#1E282A] border border-[#3B4B4F] text-white hover:bg-[#3B4B4F] transition-colors duration-200"
-        >
-          Send
-        </button>
-      </form>
     </section>
   );
 }
