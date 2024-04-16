@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import {
   useMutation,
   QueryClient,
@@ -24,6 +24,15 @@ function Messages() {
   const [messageInput, setMessageInput] = useState("");
   const { isPending, mutateAsync: sendMessages } = useSendMessages();
 
+  const ref = useRef<HTMLTextAreaElement>(null);
+
+  const resizeTextArea = () => {
+    if (ref.current) {
+      ref.current.style.height = "auto";
+      ref.current.style.height = ref.current.scrollHeight + 1.5 + "px";
+    }
+  };
+
   const handleSendMessage = async (event: React.FormEvent) => {
     event.preventDefault();
 
@@ -45,28 +54,32 @@ function Messages() {
     setPreviousMessages(messagesToDisplay);
   };
 
+  useEffect(resizeTextArea, [messageInput]);
+
   return (
     <section className="flex justify-center">
-      <div className="max-w-screen-md">
+      <div className="max-w-screen-md w-full">
         <div>
           {previousMessages.map((message) => (
             <Message message={message} />
           ))}
         </div>
         {isPending && <div>...</div>}
-        <form onSubmit={handleSendMessage}>
-          <input
-            type="text"
+        <form onSubmit={handleSendMessage} className="w-full flex items-start">
+          <textarea
             value={messageInput}
             onChange={(event) => {
               setMessageInput(event.target.value);
             }}
+            rows={1}
             required
-            className="mr-4 p-2 rounded-lg bg-[#1E282A] border border-gray-600 text-white"
+            className="mr-4 p-2 rounded-lg bg-[#1E282A] border border-gray-600 text-white flex-grow"
+            ref={ref}
           />
           <button
             type="submit"
             className="px-4 py-2 rounded-lg bg-[#1E282A] border border-[#3B4B4F] text-white hover:bg-[#3B4B4F] transition-colors duration-200"
+            disabled={isPending}
           >
             Send
           </button>
