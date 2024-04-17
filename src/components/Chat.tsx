@@ -4,10 +4,13 @@ import {
   QueryClient,
   QueryClientProvider,
 } from "@tanstack/react-query";
+
+import Message from "./Message";
+
 import type {
   CompletionRequest,
   CompletionRequestResponse,
-  Message,
+  MessagePayload,
 } from "../lib/types";
 
 export default function MessagesContainer() {
@@ -20,7 +23,9 @@ export default function MessagesContainer() {
 }
 
 function Messages() {
-  const [previousMessages, setPreviousMessages] = useState<Message[]>([]);
+  const [previousMessages, setPreviousMessages] = useState<MessagePayload[]>(
+    []
+  );
   const [messageInput, setMessageInput] = useState("");
   const { isPending, mutateAsync: sendMessages } = useSendMessages();
 
@@ -109,27 +114,13 @@ function Messages() {
   );
 }
 
-function Message({ message }: { message: Message }) {
-  return (
-    <div
-      className={`${
-        message.role === "user"
-          ? "bg-green-950 text-white-100"
-          : "bg-purple-950 text-gray-100"
-      } p-3 my-2 rounded-md`}
-    >
-      {message.content}
-    </div>
-  );
-}
-
 const useSendMessages = () => {
   return useMutation({
     mutationFn: sendMessage,
   });
 };
 
-const sendMessage = async (messages: Message[]) => {
+const sendMessage = async (messages: MessagePayload[]) => {
   const body: CompletionRequest = { messages };
 
   const response = await fetch("/api/chat", {
