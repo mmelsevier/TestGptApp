@@ -19,6 +19,7 @@ export default function Message({ message }: { message: MessagePayload }) {
         <Markdown
           components={{
             code: CodeMarkdownReplacement,
+            p: ParagraphMarkdownReplacement,
           }}
         >
           {message.content}
@@ -46,4 +47,12 @@ const CodeMarkdownReplacement = (props: CodeMarkdownReplacementProps) => {
       {props.children}
     </code>
   );
+};
+
+const ParagraphMarkdownReplacement = ({
+  children,
+}: {
+  children?: React.ReactNode;
+}) => {
+  return <p className="mb-2 whitespace-pre-wrap">{children}</p>;
 };
