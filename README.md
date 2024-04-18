@@ -1,3 +1,10 @@
+# TestGptApp
+
+Add `.env` file with `OPENAI_API_KEY`
+Run `npm run dev` to run the app
+
+See below for more about Astro.
+
 # Astro Starter Kit: Minimal
 
 ```sh
